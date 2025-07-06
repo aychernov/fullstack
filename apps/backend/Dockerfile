@@ -1,23 +1,14 @@
-# Use the official Node.js image as the base image
-FROM node:20
+# apps/backend/Dockerfile
+FROM node:18-alpine
 
-# Set the working directory inside the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+COPY ../../package.json ../../package-lock.json ./
+COPY ../../apps/backend ./apps/backend
+COPY ../../packages ./packages
+COPY ../../turbo.json ./
 
-# Install the application dependencies
 RUN npm install
 
-# Copy the rest of the application files
-COPY . .
-
-# Build the NestJS application
-RUN npm run build
-
-# Expose the application port
-EXPOSE 3000
-
-# Command to run the application
-CMD ["node", "dist/main"]
+EXPOSE 5005
+CMD ["npm", "run", "--workspace=apps/backend", "start"]
