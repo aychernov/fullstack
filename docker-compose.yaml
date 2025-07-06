@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   nextjs:
-    build: ./apps/frontend
+    build:
+      dockerfile: ./apps/frontend/Dockerfile
+      context: ./apps/frontend
     ports:
       - "3000:3000"
     environment:
@@ -10,7 +12,9 @@ services:
     depends_on:
       - redis
   nestjs:
-    build: ./apps/backend
+    build:
+      dockerfile: ./apps/backend/Dockerfile
+      context: ./apps/backend
     ports:
       - "3001:3001"
     environment:
